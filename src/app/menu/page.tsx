@@ -216,7 +216,7 @@ export default function MenuPage() {
 
       {/* Interactive Order Wizard Modal */}
       {step !== "NONE" && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/70 backdrop-blur-sm p-0 sm:p-4 transition-all">
+        <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center bg-black/70 backdrop-blur-sm p-0 sm:p-4 transition-all">
           <div className="bg-[#1c1e2d] w-full sm:max-w-md rounded-t-[32px] sm:rounded-[32px] overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
             
             {/* Modal Header */}
@@ -242,7 +242,7 @@ export default function MenuPage() {
             </div>
 
             {/* Modal Body */}
-            <div className="p-6 overflow-y-auto">
+            <div className="p-6 pb-12 overflow-y-auto">
               
               {/* STEP 1: Details */}
               {step === "DETAILS" && selectedItem && (
