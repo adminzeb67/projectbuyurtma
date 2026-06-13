@@ -1,0 +1,49 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ========= OSHFAST GLOBAL THEME ========= */
+:root {
+  --bg-deep:    #120d00;
+  --bg-card:    #1e1600;
+  --bg-hover:   #2a1e00;
+  --border:     #2e2000;
+  --gold:       #f59e0b;
+  --gold-dim:   #b37400;
+  --text-main:  #f5f0e0;
+  --text-muted: #7a6a40;
+  --red:        #ef4444;
+}
+
+html, body {
+  background-color: var(--bg-deep) !important;
+  color: var(--text-main) !important;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+* { box-sizing: border-box; }
+
+input, textarea, select {
+  background-color: var(--bg-card);
+  color: var(--text-main);
+  border-color: var(--border);
+}
+input::placeholder { color: var(--text-muted); }
+
+/* Autofill fix for dark theme */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #23263a inset !important;
+  -webkit-text-fill-color: white !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* hide scrollbar */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
