@@ -14,7 +14,7 @@ export function BottomNav() {
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 sm:hidden"
+    <div className="fixed bottom-0 left-0 right-0 z-30 sm:hidden"
       style={{ background: "#11131e", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
       <div className="flex justify-around items-center h-16 bg-[#23263a]/40 backdrop-blur-md px-1">
         {navItems.map((item) => {

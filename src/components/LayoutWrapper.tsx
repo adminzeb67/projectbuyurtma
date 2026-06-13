@@ -18,7 +18,7 @@ export function LayoutWrapper({ children }: { children: React.ReactNode }) {
       <Sidebar />
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-h-screen pb-16 sm:pb-0 sm:ml-64 w-full">
+      <div className="flex-1 flex flex-col min-h-screen pb-16 sm:pb-0 sm:ml-64 w-full relative z-50">
         <main className="flex-grow w-full max-w-5xl mx-auto">
           {children}
         </main>
