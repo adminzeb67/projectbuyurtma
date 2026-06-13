@@ -242,7 +242,7 @@ export default function MenuPage() {
             </div>
 
             {/* Modal Body */}
-            <div className="p-6 pb-12 overflow-y-auto">
+            <div className="p-6 pb-32 overflow-y-auto">
               
               {/* STEP 1: Details */}
               {step === "DETAILS" && selectedItem && (
