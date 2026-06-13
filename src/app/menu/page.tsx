@@ -216,8 +216,8 @@ export default function MenuPage() {
 
       {/* Interactive Order Wizard Modal */}
       {step !== "NONE" && (
-        <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center bg-black/70 backdrop-blur-sm p-0 pb-20 sm:p-4 transition-all">
-          <div className="bg-[#1c1e2d] w-full sm:max-w-md rounded-t-[32px] sm:rounded-[32px] overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 transition-all">
+          <div className="bg-[#1c1e2d] w-full max-w-md rounded-[32px] overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
             
             {/* Modal Header */}
             <div className="p-5 flex items-center justify-between border-b border-white/5 bg-[#23263a]/40">
