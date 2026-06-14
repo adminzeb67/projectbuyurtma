@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   Flame, Star, Clock, MapPin, ChevronRight, Search,
   Pizza, Coffee, Sandwich, ShieldCheck, X, AlertTriangle, Gift,
-  ChevronLeft, ChevronRight as ChevronRightIcon
+  ChevronLeft, ChevronRight as ChevronRightIcon, Megaphone
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Logo } from "@/components/Logo";
@@ -51,12 +51,17 @@ export default function HomePage() {
   const [mounted, setMounted] = useState(false);
   const [activeBanner, setActiveBanner] = useState(0);
   const [geofenceWarning, setGeofenceWarning] = useState(false);
+  const [siteSettings, setSiteSettings] = useState<Record<string,string>>({});
 
   useEffect(() => {
     setMounted(true);
-
-    // Auto-slide banner
     const timer = setInterval(() => setActiveBanner(p => (p + 1) % banners.length), 4000);
+
+    // Load admin settings
+    fetch("/api/site-settings")
+      .then(r => r.json())
+      .then(d => setSiteSettings(d || {}))
+      .catch(() => {});
 
     // Geofence check
     if (navigator.geolocation) {
@@ -87,6 +92,14 @@ export default function HomePage() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* ANNOUNCEMENT BANNER — from admin settings */}
+      {siteSettings.announcement && (
+        <div className="mx-4 mt-4 px-4 py-3 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center gap-3">
+          <Megaphone className="w-5 h-5 text-amber-400 shrink-0" />
+          <p className="text-sm font-semibold text-amber-300">{siteSettings.announcement}</p>
+        </div>
+      )}
 
       {/* HEADER */}
       <div className="sticky top-0 z-50 bg-[#09090b]/80 backdrop-blur-xl border-b border-white/5 pt-4 pb-3 px-4">

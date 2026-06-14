@@ -57,3 +57,15 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
+
+export async function DELETE(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get("blacklistId");
+    if (!id) return NextResponse.json({ error: "Missing ID" }, { status: 400 });
+    await prisma.blacklist.delete({ where: { id } });
+    return NextResponse.json({ success: true });
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
