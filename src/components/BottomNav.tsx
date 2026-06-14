@@ -16,34 +16,17 @@ export function BottomNav() {
 
   return (
     <>
-      {/* Mobile Bottom Nav — always visible on mobile via inline style */}
       <div
+        className="fixed bottom-0 left-0 right-0 z-[9999] flex flex-col sm:hidden"
         style={{
-          position: "fixed",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          zIndex: 9999,
           background: "rgba(13,15,24,0.98)",
           borderTop: "1px solid rgba(255,255,255,0.08)",
           backdropFilter: "blur(24px)",
           WebkitBackdropFilter: "blur(24px)",
           paddingBottom: "env(safe-area-inset-bottom, 0px)",
-          display: "flex",
-          flexDirection: "column",
         }}
-        className="sm:hidden"
       >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-around",
-            alignItems: "center",
-            height: "60px",
-            paddingLeft: "8px",
-            paddingRight: "8px",
-          }}
-        >
+        <div className="flex justify-around items-center h-[60px] px-2">
           {navItems.map((item) => {
             const isActive =
               pathname === item.href ||
@@ -54,52 +37,26 @@ export function BottomNav() {
               <Link
                 key={item.href}
                 href={item.href}
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  flex: 1,
-                  height: "100%",
-                  gap: "4px",
-                  textDecoration: "none",
-                  transition: "all 0.2s",
-                }}
+                className="flex flex-col items-center justify-center flex-1 h-full gap-1 no-underline transition-all duration-200"
               >
                 <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    width: "40px",
-                    height: "30px",
-                    borderRadius: "14px",
-                    background: isActive
-                      ? "rgba(99,102,241,0.2)"
-                      : "transparent",
-                    boxShadow: isActive
-                      ? "0 0 12px rgba(99,102,241,0.25)"
-                      : "none",
-                    transition: "all 0.2s",
-                  }}
+                  className={`flex items-center justify-center w-10 h-[30px] rounded-[14px] transition-all duration-200 ${
+                    isActive
+                      ? "bg-indigo-500/20 shadow-[0_0_12px_rgba(99,102,241,0.25)]"
+                      : "bg-transparent"
+                  }`}
                 >
                   <Icon
-                    style={{
-                      width: "20px",
-                      height: "20px",
-                      color: isActive ? "#818cf8" : "#4a4f6a",
-                      transition: "color 0.2s",
-                    }}
+                    className={`w-5 h-5 transition-colors duration-200 ${
+                      isActive ? "text-indigo-400" : "text-[#4a4f6a]"
+                    }`}
                     strokeWidth={isActive ? 2.5 : 2}
                   />
                 </div>
                 <span
-                  style={{
-                    fontSize: "10px",
-                    fontWeight: 600,
-                    color: isActive ? "#818cf8" : "#4a4f6a",
-                    transition: "color 0.2s",
-                  }}
+                  className={`text-[10px] font-semibold transition-colors duration-200 ${
+                    isActive ? "text-indigo-400" : "text-[#4a4f6a]"
+                  }`}
                 >
                   {item.label}
                 </span>
@@ -110,7 +67,7 @@ export function BottomNav() {
       </div>
 
       {/* Spacer so content is not hidden behind nav */}
-      <div className="sm:hidden" style={{ height: "60px" }} />
+      <div className="sm:hidden h-[60px]" />
     </>
   );
 }
