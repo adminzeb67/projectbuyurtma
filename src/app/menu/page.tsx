@@ -34,6 +34,7 @@ function MenuContent() {
   const [selectedItem, setSelectedItem] = useState<any>(null);
   const [step, setStep] = useState<"NONE"|"DETAILS"|"DRINKS_PROMPT"|"DRINKS_SELECTION"|"PAYMENT"|"INFO">("NONE");
   const [showOrderSuccess, setShowOrderSuccess] = useState(false);
+  const [createdOrderId, setCreatedOrderId] = useState<string | null>(null);
   const [orderDrinks, setOrderDrinks]   = useState<any[]>([]);
   const [paymentMethod, setPaymentMethod] = useState<"CASH"|"CARD"|null>(null);
   const [phone, setPhone]         = useState("+998");
@@ -128,7 +129,12 @@ function MenuContent() {
           paymentMethod, location: locationStr,
         }),
       });
-      if (res.ok) { setStep("NONE"); setShowOrderSuccess(true); }
+      if (res.ok) { 
+        const data = await res.json();
+        setCreatedOrderId(data.orderId);
+        setStep("NONE"); 
+        setShowOrderSuccess(true); 
+      }
       else alert("Xatolik yuz berdi!");
     } catch { alert("Internet aloqasini tekshiring!"); }
     finally { setIsSubmitting(false); }
@@ -184,7 +190,7 @@ function MenuContent() {
   return (
     <div className="flex flex-col min-h-screen pb-24 font-sans text-white" style={{ background: "var(--bg-deep)" }}>
       {showOrderSuccess && (
-        <SuccessAnimation type="order" onClose={() => { setShowOrderSuccess(false); router.push("/orders"); }} />
+        <SuccessAnimation type="order" onClose={() => { setShowOrderSuccess(false); router.push(createdOrderId ? `/orders/${createdOrderId}` : "/orders"); }} />
       )}
 
       {/* Header */}

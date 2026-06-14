@@ -11,6 +11,7 @@ export async function GET() {
         items: {
           include: { menuItem: true },
         },
+        courier: true,
       },
     });
     return NextResponse.json(orders);
@@ -21,10 +22,15 @@ export async function GET() {
 
 export async function PATCH(request: Request) {
   try {
-    const { orderId, status } = await request.json();
+    const { orderId, status, courierId } = await request.json();
+    
+    const updateData: any = {};
+    if (status) updateData.status = status;
+    if (courierId !== undefined) updateData.courierId = courierId;
+
     const order = await prisma.order.update({
       where: { id: orderId },
-      data: { status },
+      data: updateData,
     });
     return NextResponse.json(order);
   } catch (error: any) {

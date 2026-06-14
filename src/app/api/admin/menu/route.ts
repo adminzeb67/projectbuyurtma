@@ -18,6 +18,7 @@ export async function GET() {
       category: item.category.name,
       desc: item.description || "",
       emoji: item.image || "🍽️",
+      isAvailable: item.isAvailable,
     }));
 
     return NextResponse.json(formatted);
@@ -71,6 +72,19 @@ export async function POST(request: Request) {
     });
 
     return NextResponse.json({ success: true, item: newItem });
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
+
+export async function PATCH(request: Request) {
+  try {
+    const { id, isAvailable } = await request.json();
+    const updated = await prisma.menuItem.update({
+      where: { id },
+      data: { isAvailable }
+    });
+    return NextResponse.json({ success: true, isAvailable: updated.isAvailable });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

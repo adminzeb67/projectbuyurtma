@@ -12,6 +12,8 @@ enum Role {
   RESTAURANT
   COURIER
   ADMIN
+  OPERATOR
+  CASHIER
 }
 
 enum OrderStatus {
@@ -102,6 +104,9 @@ model Order {
   createdAt       DateTime    @default(now())
   updatedAt       DateTime    @updatedAt
 
+  paymentMethod   String      @default("Naqd") // Naqd, Click, Payme
+  estimatedTime   Int?        // Taxminiy yetkazish vaqti (daqiqalarda)
+
   items           OrderItem[]
 }
 
@@ -113,4 +118,29 @@ model OrderItem {
   menuItem   MenuItem @relation(fields: [menuItemId], references: [id])
   quantity   Int
   price      Float
+}
+
+model PromoCode {
+  id          String   @id @default(cuid())
+  code        String   @unique
+  discount    Float    // Foiz yoki summa
+  type        String   @default("PERCENT") // PERCENT yoki FIXED
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Blacklist {
+  id        String   @id @default(cuid())
+  phone     String   @unique
+  reason    String?
+  createdAt DateTime @default(now())
+}
+
+model SystemSetting {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  value       String
+  description String?
+  updatedAt   DateTime @updatedAt
 }

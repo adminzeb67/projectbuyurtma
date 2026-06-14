@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { getDistance, estimateTime } from "@/lib/utils";
 
 export async function POST(request: Request) {
   try {
@@ -73,6 +74,10 @@ export async function POST(request: Request) {
     const locLat = location ? parseFloat(location.split(',')[0]) : 42.46;
     const locLng = location ? parseFloat(location.split(',')[1]) : 59.61;
     
+    // Xo'jayli tumani uchun masofa hisoblash (restoran koordinatalari bilan)
+    const distanceKm = getDistance(restaurant.latitude, restaurant.longitude, locLat, locLng);
+    const estTime = estimateTime(distanceKm);
+
     const paymentStr = paymentMethod === "CASH" ? "Naqd pul" : "Plastik karta";
     const deliveryAddressStr = `Telefon: ${phone} | Ism: ${name || 'Mijoz'} | Lokatsiya: ${location} | To'lov: ${paymentStr}`;
 
@@ -82,6 +87,8 @@ export async function POST(request: Request) {
         deliveryAddress: deliveryAddressStr,
         latitude: locLat,
         longitude: locLng,
+        paymentMethod: paymentMethod === "CASH" ? "Naqd" : "Karta",
+        estimatedTime: estTime,
         customerId: guestUser.id,
         restaurantId: restaurant.id,
         items: {
