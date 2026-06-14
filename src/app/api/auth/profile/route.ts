@@ -15,9 +15,7 @@ export async function PUT(request: Request) {
 
     const session = await decrypt(token);
 
-    if (session.role === "ADMIN") {
-      return NextResponse.json({ error: "Admin profili o'zgartirilmaydi" }, { status: 403 });
-    }
+
 
     const { name, username, phone, password, confirmPassword } = await request.json();
 

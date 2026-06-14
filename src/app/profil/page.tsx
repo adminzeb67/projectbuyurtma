@@ -65,7 +65,7 @@ export default function ProfilPage() {
     setNewAddrLabel(""); setNewAddrVal("");
   };
 
-  const displayName = user?.username || user?.name || "Mijoz";
+  const displayName = user?.name || user?.username || "Mijoz";
   const initials = displayName.slice(0, 2).toUpperCase();
 
   const tabs = [
