@@ -44,7 +44,7 @@ export default function ProfilPage() {
   const handleSave = async () => {
     setError(""); setSaving(true);
     try {
-      const res = await fetch("/api/auth/profile", { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name, username, phone, password, confirmPassword }) });
+      const res = await fetch("/api/auth/profile", { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name, username: name, phone, password, confirmPassword }) });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Xatolik");
       setUser(data.user); setPassword(""); setConfirmPassword(""); setEditing(false);
@@ -136,8 +136,7 @@ export default function ProfilPage() {
               )}
             </div>
             {error && <div className="mb-2 px-4 py-3 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-500 text-[13px] text-center">{error}</div>}
-            <FieldRow icon={<User className="w-5 h-5 text-orange-500"/>} label="Ism" editing={editing} value={name} display={user?.name||"—"} onChange={setName} placeholder="Ismingiz"/>
-            <FieldRow icon={<span className="text-orange-500 font-black text-lg">@</span>} label="Login" editing={editing} value={username} display={user?.username||"—"} onChange={setUsername} placeholder="Login"/>
+            <FieldRow icon={<User className="w-5 h-5 text-orange-500"/>} label="Ism yoki login" editing={editing} value={name} display={displayName} onChange={setName} placeholder="Ism yoki login"/>
             <FieldRow icon={<Phone className="w-5 h-5 text-green-500"/>} label="Telefon" editing={editing} value={phone} display={user?.phone||"—"} onChange={setPhone} placeholder="+998..." inputType="tel"/>
             {editing && (
               <>

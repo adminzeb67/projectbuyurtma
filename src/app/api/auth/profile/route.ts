@@ -15,7 +15,9 @@ export async function PUT(request: Request) {
 
     const session = await decrypt(token);
 
-
+    if (session.role === "ADMIN" || session.userId === "admin-id") {
+      return NextResponse.json({ error: "Asosiy admin hisobini bu yerdan tahrirlab bo'lmaydi (faqat mijozlar o'z profilini tahrirlay oladi)" }, { status: 403 });
+    }
 
     const { name, username, phone, password, confirmPassword } = await request.json();
 
