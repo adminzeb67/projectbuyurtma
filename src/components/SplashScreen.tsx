@@ -49,7 +49,7 @@ export function SplashScreen({ children }: { children: React.ReactNode }) {
         
         {/* Center Logo Animation */}
         <div className="relative flex flex-col items-center justify-center animate-bounce">
-          <Logo className="w-[100px] h-[100px] shadow-[0_0_30px_rgba(249,115,22,0.4)] rounded-[25%]" />
+          <Logo className="w-[160px] h-[160px] sm:w-[180px] sm:h-[180px] shadow-[0_0_50px_rgba(249,115,22,0.4)] rounded-[25%]" />
         </div>
         
         {/* F.Lavash Text */}
