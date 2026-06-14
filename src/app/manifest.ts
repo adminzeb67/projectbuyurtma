@@ -2,9 +2,9 @@ import { MetadataRoute } from 'next';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'OshFast - TaomYet',
-    short_name: 'OshFast',
-    description: 'O\'zbekiston bo\'ylab ovqat buyurtma qilish va yetkazib berish xizmati',
+    name: 'F.Lavash',
+    short_name: 'F.Lavash',
+    description: 'F.Lavash - Tezkor yetkazib berish xizmati',
     start_url: '/',
     display: 'standalone',
     background_color: '#ffffff',

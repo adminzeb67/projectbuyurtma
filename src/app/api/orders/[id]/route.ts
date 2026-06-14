@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
-export async function GET(request: Request, { params }: { params: { id: string } }) {
+export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const orderId = params.id;
+    const orderId = (await params).id;
     if (!orderId) {
       return NextResponse.json({ error: "Order ID kiritilmagan" }, { status: 400 });
     }
