@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Star, MapPin, X, ArrowRight, CheckCircle2, ChevronLeft, Navigation, CreditCard, Banknote, Search, RefreshCw } from "lucide-react";
+import { Star, X, ArrowRight, CheckCircle2, ChevronLeft, Navigation, CreditCard, Banknote, Search, RefreshCw } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { SuccessAnimation } from "@/components/SuccessAnimation";
 
 function formatPrice(p: number) {
   return p.toLocaleString("uz-UZ") + " so'm";
@@ -19,6 +20,7 @@ export default function MenuPage() {
   // Wizard State
   const [selectedItem, setSelectedItem] = useState<any>(null);
   const [step, setStep] = useState<"NONE" | "DETAILS" | "DRINKS_PROMPT" | "DRINKS_SELECTION" | "PAYMENT" | "INFO" | "SUCCESS">("NONE");
+  const [showOrderSuccess, setShowOrderSuccess] = useState(false);
   
   // Order Data State
   const [orderDrinks, setOrderDrinks] = useState<any[]>([]);
@@ -124,7 +126,8 @@ export default function MenuPage() {
       });
 
       if (res.ok) {
-        setStep("SUCCESS");
+        setStep("NONE");
+        setShowOrderSuccess(true);
       } else {
         alert("Xatolik yuz berdi!");
       }
@@ -137,6 +140,17 @@ export default function MenuPage() {
 
   return (
     <div className="flex flex-col min-h-screen pb-24" style={{ background: "#11131e" }}>
+
+      {/* Order Success Animated Modal */}
+      {showOrderSuccess && (
+        <SuccessAnimation
+          type="order"
+          onClose={() => {
+            setShowOrderSuccess(false);
+            router.push("/orders");
+          }}
+        />
+      )}
       {/* Header & Search */}
       <div className="p-4 pt-8 sticky top-0 z-30 bg-[#11131e]/95 backdrop-blur-xl border-b border-white/5">
         <div className="flex justify-between items-center mb-4">
@@ -392,27 +406,7 @@ export default function MenuPage() {
                 </div>
               )}
 
-              {/* STEP 5: Success */}
-              {step === "SUCCESS" && (
-                <div className="flex flex-col items-center text-center animate-in zoom-in-95 duration-300 py-6">
-                  <div className="w-24 h-24 bg-green-500/20 rounded-full flex items-center justify-center mb-6">
-                    <CheckCircle2 className="w-12 h-12 text-green-400" />
-                  </div>
-                  <h3 className="text-[24px] font-extrabold text-white mb-2">Qabul qilindi!</h3>
-                  <p className="text-[#8e93a6] text-[15px] mb-8 px-4">
-                    Buyurtmangiz tayyorlanmoqda. Kuryer tez orada siz ko'rsatgan manzilga yetib boradi.
-                  </p>
-                  <button 
-                    onClick={() => {
-                      closeWizard();
-                      router.push("/orders");
-                    }}
-                    className="w-full py-4 rounded-[20px] font-bold text-[16px] text-[#11131e] bg-white hover:bg-gray-100 transition-colors"
-                  >
-                    Buyurtmalarimga o'tish
-                  </button>
-                </div>
-              )}
+              {/* STEP 5: Success — handled by SuccessAnimation modal */}
 
             </div>
           </div>

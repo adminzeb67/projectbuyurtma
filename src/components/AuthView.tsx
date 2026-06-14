@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ChevronDown, Send, User, Lock, Eye, EyeOff, Rocket, Star, Heart, Smartphone, ShoppingBag } from "lucide-react";
 import { Logo } from "@/components/Logo";
+import { SuccessAnimation } from "@/components/SuccessAnimation";
 
 export function AuthView() {
   const [activeTab, setActiveTab] = useState<'login' | 'register' | null>(null);
@@ -17,6 +18,7 @@ export function AuthView() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [showRegisterSuccess, setShowRegisterSuccess] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,7 +54,7 @@ export function AuthView() {
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || "Xatolik yuz berdi");
-        router.refresh();
+        setShowRegisterSuccess(true);
       }
     } catch (err: any) {
       setError(err.message);
@@ -63,6 +65,17 @@ export function AuthView() {
 
   return (
     <div className="min-h-screen bg-[#11131e] flex flex-col items-center font-sans relative overflow-x-hidden" style={{ background: "radial-gradient(circle at center, #1a1d2e 0%, #0d0f18 100%)" }}>
+      
+      {/* Register Success Animated Modal */}
+      {showRegisterSuccess && (
+        <SuccessAnimation
+          type="register"
+          onClose={() => {
+            setShowRegisterSuccess(false);
+            router.refresh();
+          }}
+        />
+      )}
       
       {/* Background glow effects */}
       <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-500/10 blur-[100px] rounded-full pointer-events-none" />
