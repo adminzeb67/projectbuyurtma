@@ -1,211 +1,157 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Zap, Star, Clock, ShieldCheck, MapPin, ChevronRight } from "lucide-react";
+import { Flame, Star, Clock, MapPin, ChevronRight, Search, Pizza, Coffee, Sandwich, ShieldCheck } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Logo } from "@/components/Logo";
 
-const features = [
-  {
-    icon: Zap,
-    color: "#f59e0b",
-    bg: "rgba(245,158,11,0.12)",
-    border: "rgba(245,158,11,0.2)",
-    title: "Tezkor yetkazish",
-    desc: "Buyurtmangiz 30 daqiqa ichida issiqligicha yetib boradi",
-  },
-  {
-    icon: Star,
-    color: "#a855f7",
-    bg: "rgba(168,85,247,0.12)",
-    border: "rgba(168,85,247,0.2)",
-    title: "Sifatli taomlar",
-    desc: "Eng sara ingredientlardan tayyorlangan milliy va zamonaviy taomlar",
-  },
-  {
-    icon: Clock,
-    color: "#38bdf8",
-    bg: "rgba(56,189,248,0.12)",
-    border: "rgba(56,189,248,0.2)",
-    title: "24/7 Xizmat",
-    desc: "Istalgan vaqt buyurtma bering — biz doim tayyormiz",
-  },
-  {
-    icon: ShieldCheck,
-    color: "#22c55e",
-    bg: "rgba(34,197,94,0.12)",
-    border: "rgba(34,197,94,0.2)",
-    title: "Xavfsiz to'lov",
-    desc: "Naqd pul yoki karta orqali qulay va xavfsiz to'lov",
-  },
-  {
-    icon: MapPin,
-    color: "#f43f5e",
-    bg: "rgba(244,63,94,0.12)",
-    border: "rgba(244,63,94,0.2)",
-    title: "Qoraqalpog'iston",
-    desc: "Xo'jayli tumani va atrofdagi hududlarga yetkazib berish",
-  },
+const categories = [
+  { icon: Pizza, label: "Ovqatlar", color: "text-orange-500", bg: "bg-orange-500/10" },
+  { icon: Coffee, label: "Ichimliklar", color: "text-blue-400", bg: "bg-blue-400/10" },
+  { icon: Sandwich, label: "Fastfud", color: "text-yellow-400", bg: "bg-yellow-400/10" },
+];
+
+const trending = [
+  { id: 1, name: "Mol go'shtli Lavash", price: "28 000", img: "🌯", rating: 4.9 },
+  { id: 2, name: "Tovuqli Burger", price: "24 000", img: "🍔", rating: 4.8 },
+  { id: 3, name: "Pepsi 0.5L", price: "7 000", img: "🥤", rating: 4.7 },
+  { id: 4, name: "Klab Sendvich", price: "32 000", img: "🥪", rating: 4.9 },
 ];
 
 export default function HomePage() {
   const router = useRouter();
-  const [visible, setVisible] = useState(false);
-  const [featVisible, setFeatVisible] = useState<boolean[]>(Array(features.length).fill(false));
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // Hero entrance
-    const t = setTimeout(() => setVisible(true), 80);
-
-    // Staggered feature cards
-    features.forEach((_, i) => {
-      setTimeout(() => {
-        setFeatVisible((prev) => {
-          const next = [...prev];
-          next[i] = true;
-          return next;
-        });
-      }, 350 + i * 120);
-    });
-
-    return () => clearTimeout(t);
+    setMounted(true);
   }, []);
 
   return (
-    <div
-      className="flex flex-col min-h-screen text-white font-sans pb-28"
-      style={{ background: "radial-gradient(circle at 30% 20%, #1a1d2e 0%, #0d0f18 70%, #0a0c14 100%)" }}
-    >
-      {/* ───── HERO ───── */}
-      <div
-        className="flex flex-col items-center justify-center px-6 pt-12 pb-10 text-center relative overflow-hidden"
-        style={{
-          transition: "opacity 0.6s ease, transform 0.6s ease",
-          opacity: visible ? 1 : 0,
-          transform: visible ? "translateY(0)" : "translateY(20px)",
-        }}
-      >
-        {/* Glow blobs */}
-        <div
-          className="absolute top-[-60px] left-1/2 -translate-x-1/2 w-[300px] h-[300px] rounded-full pointer-events-none"
-          style={{
-            background: "radial-gradient(circle, rgba(139,92,246,0.18) 0%, transparent 70%)",
-            filter: "blur(40px)",
-          }}
-        />
-
-        {/* Logo with pulse ring */}
-        <div className="relative mb-6">
-          <div
-            className="absolute inset-0 rounded-[30%] animate-ping"
-            style={{ background: "rgba(139,92,246,0.15)", animationDuration: "2.5s" }}
-          />
-          <Logo
-            className="w-24 h-24 relative rounded-[25%]"
-            style={{ boxShadow: "0 0 40px rgba(139,92,246,0.35), 0 0 80px rgba(99,102,241,0.15)" }}
-          />
+    <div className="flex flex-col min-h-screen font-sans pb-24 bg-[var(--bg-deep)] text-white">
+      
+      {/* ───── HEADER / SEARCH ───── */}
+      <div className="sticky top-0 z-50 bg-[#09090b]/80 backdrop-blur-xl border-b border-white/5 pt-4 pb-3 px-4">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex flex-col">
+            <span className="text-[12px] text-[#a1a1aa] font-medium uppercase tracking-wider">Yetkazib berish</span>
+            <div className="flex items-center gap-1 text-white">
+              <MapPin className="w-4 h-4 text-orange-500" />
+              <span className="text-[15px] font-bold">Xo'jayli tumani</span>
+            </div>
+          </div>
+          <div className="w-10 h-10 rounded-full bg-orange-500/20 flex items-center justify-center border border-orange-500/30">
+            <Logo className="w-8 h-8 rounded-[25%]" />
+          </div>
         </div>
 
-        <h1
-          className="text-[34px] sm:text-[42px] font-black leading-tight mb-3"
-          style={{ letterSpacing: "-0.02em" }}
-        >
-          <span
-            style={{
-              background: "linear-gradient(135deg, #c084fc 0%, #818cf8 50%, #38bdf8 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-            }}
-          >
-            OshFast
-          </span>
-          <br />
-          <span className="text-white text-[24px] sm:text-[30px] font-bold">
-            Ovqat yetkazib berish
-          </span>
-        </h1>
-
-        <p className="text-[#8e93a6] text-[15px] sm:text-[16px] leading-relaxed max-w-[340px] mb-8">
-          O'zbekiston bo'ylab eng tezkor va mazali taomlarni uyingizga
-          yetkazamiz ✨
-        </p>
-
-        <button
-          onClick={() => router.push("/menu")}
-          className="flex items-center gap-2 px-8 py-3.5 rounded-full font-bold text-[15px] text-white transition-all hover:scale-105 active:scale-95"
-          style={{
-            background: "linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%)",
-            boxShadow: "0 0 24px rgba(139,92,246,0.4)",
-          }}
-        >
-          Buyurtma berish
-          <ChevronRight className="w-4 h-4" />
-        </button>
+        {/* Search Bar */}
+        <div className="relative w-full">
+          <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+            <Search className="w-5 h-5 text-[#a1a1aa]" />
+          </div>
+          <input 
+            type="text" 
+            placeholder="Taom yoki ichimlik qidirish..." 
+            className="w-full bg-[#18181b] border border-white/10 rounded-2xl py-3.5 pl-12 pr-4 text-[15px] font-medium placeholder-[#52525b] outline-none focus:border-orange-500/50 transition-colors shadow-inner"
+            onClick={() => router.push("/menu")}
+          />
+        </div>
       </div>
 
-      {/* ───── FEATURES ───── */}
-      <div className="px-4 sm:px-6">
-        <h2 className="text-[13px] font-bold text-[#5c6175] uppercase tracking-widest mb-4 px-1">
-          Nima uchun OshFast?
-        </h2>
+      <div className={`transition-opacity duration-500 ${mounted ? 'opacity-100' : 'opacity-0'}`}>
+        
+        {/* ───── PROMO BANNER ───── */}
+        <div className="px-4 mt-6 mb-8">
+          <div className="w-full h-[140px] rounded-[24px] relative overflow-hidden shadow-[0_8px_30px_rgba(249,115,22,0.15)] flex items-center px-6" style={{ background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)" }}>
+            <div className="absolute -right-10 -top-10 w-40 h-40 bg-white/20 blur-3xl rounded-full" />
+            <div className="relative z-10 w-[60%]">
+              <span className="inline-block px-2 py-1 bg-white/20 backdrop-blur-md rounded-md text-[10px] font-bold uppercase tracking-wider mb-2">Yangi</span>
+              <h2 className="text-[20px] font-black leading-tight mb-1">Bepul yetkazish!</h2>
+              <p className="text-white/80 text-[13px] font-medium leading-snug">Birinchi buyurtmangizni mutlaqo bepul yetkazib beramiz.</p>
+            </div>
+            {/* Placeholder for banner image */}
+            <div className="absolute right-[-20px] bottom-[-20px] text-[100px] opacity-90 drop-shadow-2xl">
+              🛵
+            </div>
+          </div>
+        </div>
 
-        <div className="flex flex-col gap-3">
-          {features.map((f, i) => {
-            const Icon = f.icon;
-            return (
-              <div
-                key={i}
-                className="flex items-center gap-4 px-5 py-4 rounded-[20px]"
-                style={{
-                  background: "rgba(35,38,58,0.5)",
-                  border: `1px solid rgba(255,255,255,0.05)`,
-                  transition: `opacity 0.5s ease ${i * 0.05}s, transform 0.5s ease ${i * 0.05}s`,
-                  opacity: featVisible[i] ? 1 : 0,
-                  transform: featVisible[i] ? "translateX(0)" : "translateX(-16px)",
-                }}
+        {/* ───── CATEGORIES ───── */}
+        <div className="mb-8 px-4">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-[18px] font-bold text-white">Kategoriyalar</h3>
+            <button onClick={() => router.push("/menu")} className="text-[13px] font-bold text-orange-500 flex items-center">
+              Barchasi <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+          <div className="flex gap-4 overflow-x-auto scrollbar-hide pb-2">
+            {categories.map((c, i) => (
+              <button 
+                key={i} 
+                onClick={() => router.push("/menu")}
+                className="flex flex-col items-center gap-2 min-w-[80px]"
               >
-                <div
-                  className="w-11 h-11 rounded-[14px] flex items-center justify-center shrink-0"
-                  style={{ background: f.bg, border: `1px solid ${f.border}` }}
-                >
-                  <Icon className="w-5 h-5" style={{ color: f.color }} />
+                <div className={`w-16 h-16 rounded-[20px] ${c.bg} flex items-center justify-center border border-white/5`}>
+                  <c.icon className={`w-8 h-8 ${c.color}`} />
                 </div>
-                <div>
-                  <h3 className="text-[14px] font-bold text-white mb-0.5">{f.title}</h3>
-                  <p className="text-[12px] text-[#8e93a6] leading-snug">{f.desc}</p>
+                <span className="text-[13px] font-medium text-[#a1a1aa]">{c.label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* ───── TRENDING ───── */}
+        <div className="mb-8 px-4">
+          <div className="flex items-center gap-2 mb-4">
+            <Flame className="w-5 h-5 text-orange-500" />
+            <h3 className="text-[18px] font-bold text-white">Trenddagi taomlar</h3>
+          </div>
+          
+          <div className="flex gap-4 overflow-x-auto scrollbar-hide pb-4 -mx-4 px-4">
+            {trending.map((item) => (
+              <div 
+                key={item.id}
+                onClick={() => router.push("/menu")}
+                className="min-w-[160px] bg-[#18181b] rounded-[24px] p-3 border border-white/5 shadow-lg flex flex-col active:scale-95 transition-transform"
+              >
+                <div className="w-full h-[120px] bg-[#27272a] rounded-[16px] mb-3 flex items-center justify-center text-[60px]">
+                  {item.img}
+                </div>
+                <h4 className="text-[15px] font-bold text-white leading-tight mb-1">{item.name}</h4>
+                <div className="flex items-center justify-between mt-auto pt-2">
+                  <span className="text-[14px] font-bold text-orange-500">{item.price} <span className="text-[10px]">so'm</span></span>
+                  <div className="flex items-center gap-1 bg-[#27272a] px-1.5 py-0.5 rounded-md">
+                    <Star className="w-3 h-3 text-yellow-500 fill-yellow-500" />
+                    <span className="text-[11px] font-bold">{item.rating}</span>
+                  </div>
                 </div>
               </div>
-            );
-          })}
+            ))}
+          </div>
         </div>
 
-        {/* Stats row */}
-        <div
-          className="mt-6 grid grid-cols-3 gap-3"
-          style={{
-            transition: "opacity 0.6s ease 0.8s, transform 0.6s ease 0.8s",
-            opacity: visible ? 1 : 0,
-            transform: visible ? "translateY(0)" : "translateY(12px)",
-          }}
-        >
-          {[
-            { val: "30 min", label: "Avg yetkazish" },
-            { val: "4.9★", label: "Reyting" },
-            { val: "1000+", label: "Buyurtmalar" },
-          ].map((s, i) => (
-            <div
-              key={i}
-              className="flex flex-col items-center py-4 rounded-[18px]"
-              style={{
-                background: "rgba(35,38,58,0.4)",
-                border: "1px solid rgba(255,255,255,0.05)",
-              }}
-            >
-              <span className="text-[18px] font-black text-white">{s.val}</span>
-              <span className="text-[10px] text-[#5c6175] font-semibold mt-0.5">{s.label}</span>
+        {/* ───── INFO CARDS ───── */}
+        <div className="px-4 grid grid-cols-2 gap-3">
+          <div className="bg-[#18181b] border border-white/5 p-4 rounded-[20px] flex items-center gap-3">
+            <div className="w-10 h-10 rounded-[12px] bg-orange-500/10 flex items-center justify-center">
+              <Clock className="w-5 h-5 text-orange-500" />
             </div>
-          ))}
+            <div className="flex flex-col">
+              <span className="text-[13px] font-bold text-white">30 Daqiqa</span>
+              <span className="text-[11px] font-medium text-[#a1a1aa]">Yetkazish</span>
+            </div>
+          </div>
+          <div className="bg-[#18181b] border border-white/5 p-4 rounded-[20px] flex items-center gap-3">
+            <div className="w-10 h-10 rounded-[12px] bg-green-500/10 flex items-center justify-center">
+              <ShieldCheck className="w-5 h-5 text-green-500" />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-[13px] font-bold text-white">Xavfsiz</span>
+              <span className="text-[11px] font-medium text-[#a1a1aa]">To'lovlar</span>
+            </div>
+          </div>
         </div>
+
       </div>
     </div>
   );

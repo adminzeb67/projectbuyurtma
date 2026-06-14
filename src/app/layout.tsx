@@ -25,13 +25,13 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "OshFast - TaomYet",
-  description: "O'zbekiston bo'ylab ovqat buyurtma qilish va yetkazib berish xizmati",
+  title: "F.Lavash - Yetkazib Berish",
+  description: "O'zbekiston bo'ylab ovqat, ichimlik va fastfud yetkazib berish xizmati",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "OshFast",
+    title: "F.Lavash",
   },
   formatDetection: {
     telephone: false,
@@ -52,9 +52,9 @@ export default async function RootLayout({
     <html
       lang="uz"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-      style={{ background: "#111111" }}
+      style={{ background: "#09090b" }}
     >
-      <body className="min-h-full flex" style={{ background: "#111111", color: "#f5f5f5" }}>
+      <body className="min-h-full flex" style={{ background: "#09090b", color: "#fafafa" }}>
         <SplashScreen>
           {!isAuthenticated ? (
             <div className="w-full">

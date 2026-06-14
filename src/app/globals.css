@@ -4,17 +4,17 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* ========= OSHFAST GLOBAL THEME ========= */
+/* ========= F.LAVASH GLOBAL THEME ========= */
 :root {
-  --bg-deep:    #120d00;
-  --bg-card:    #1e1600;
-  --bg-hover:   #2a1e00;
-  --border:     #2e2000;
-  --gold:       #f59e0b;
-  --gold-dim:   #b37400;
-  --text-main:  #f5f0e0;
-  --text-muted: #7a6a40;
-  --red:        #ef4444;
+  --bg-deep:    #09090b; /* Very dark slate / black */
+  --bg-card:    #18181b; /* Zinc 900 */
+  --bg-hover:   #27272a; /* Zinc 800 */
+  --border:     #27272a; /* Zinc 800 */
+  --orange:     #f97316; /* Tailwind orange-500 */
+  --orange-dim: #ea580c; /* Tailwind orange-600 */
+  --text-main:  #fafafa; /* Zinc 50 */
+  --text-muted: #a1a1aa; /* Zinc 400 */
+  --red:        #ef4444; /* Red 500 */
 }
 
 html, body {
