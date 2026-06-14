@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, ClipboardList, Coffee, UserCircle } from "lucide-react";
+import { Home, ClipboardList, Coffee, Settings } from "lucide-react";
 
 export function BottomNav() {
   const pathname = usePathname();
@@ -11,7 +11,7 @@ export function BottomNav() {
     { label: "Asosiy", icon: Home, href: "/" },
     { label: "Menyu", icon: Coffee, href: "/menu" },
     { label: "Buyurtmalar", icon: ClipboardList, href: "/orders" },
-    { label: "Profilim", icon: UserCircle, href: "/profil" },
+    { label: "Sozlamalar", icon: Settings, href: "/profil" },
   ];
 
   return (
