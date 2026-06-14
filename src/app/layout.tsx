@@ -54,16 +54,25 @@ export default async function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
       style={{ background: "#09090b" }}
     >
-      <body className="min-h-full flex" style={{ background: "#09090b", color: "#fafafa" }}>
+      <body className="min-h-full flex" style={{ background: "#0f0f12", color: "#fafafa" }}>
+        {/* Animated background orbs */}
+        <div className="fixed inset-0 overflow-hidden pointer-events-none z-0" aria-hidden="true">
+          <div className="bg-orb-1 absolute top-[-15%] left-[-10%] w-[500px] h-[500px] rounded-full opacity-[0.07]"
+            style={{ background: "radial-gradient(circle, #f97316 0%, transparent 70%)" }} />
+          <div className="bg-orb-2 absolute bottom-[-20%] right-[-10%] w-[600px] h-[600px] rounded-full opacity-[0.06]"
+            style={{ background: "radial-gradient(circle, #ea580c 0%, transparent 70%)" }} />
+          <div className="bg-orb-3 absolute top-[40%] left-[50%] w-[400px] h-[400px] rounded-full opacity-[0.04]"
+            style={{ background: "radial-gradient(circle, #f59e0b 0%, transparent 70%)" }} />
+        </div>
         <SplashScreen>
           {!isAuthenticated ? (
-            <div className="w-full">
+            <div className="w-full relative z-10">
               <AuthView />
             </div>
           ) : (
-              <LayoutWrapper>
-                {children}
-              </LayoutWrapper>
+            <LayoutWrapper>
+              {children}
+            </LayoutWrapper>
           )}
         </SplashScreen>
       </body>

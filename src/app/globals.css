@@ -6,15 +6,15 @@
 
 /* ========= F.LAVASH GLOBAL THEME ========= */
 :root {
-  --bg-deep:    #09090b; /* Very dark slate / black */
-  --bg-card:    #18181b; /* Zinc 900 */
-  --bg-hover:   #27272a; /* Zinc 800 */
-  --border:     #27272a; /* Zinc 800 */
-  --orange:     #f97316; /* Tailwind orange-500 */
-  --orange-dim: #ea580c; /* Tailwind orange-600 */
-  --text-main:  #fafafa; /* Zinc 50 */
-  --text-muted: #a1a1aa; /* Zinc 400 */
-  --red:        #ef4444; /* Red 500 */
+  --bg-deep:    #0f0f12; /* Slightly lighter dark */
+  --bg-card:    #1a1a1f; /* Card background */
+  --bg-hover:   #25252c; /* Hover state */
+  --border:     #2a2a33; /* Border */
+  --orange:     #f97316;
+  --orange-dim: #ea580c;
+  --text-main:  #fafafa;
+  --text-muted: #a1a1aa;
+  --red:        #ef4444;
 }
 
 html, body {
@@ -24,6 +24,26 @@ html, body {
   margin: 0;
   padding: 0;
 }
+
+/* Animated background orbs */
+@keyframes orb-float-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(40px, -30px) scale(1.1); }
+  66%       { transform: translate(-20px, 20px) scale(0.95); }
+}
+@keyframes orb-float-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(-50px, 30px) scale(1.05); }
+  66%       { transform: translate(30px, -40px) scale(0.9); }
+}
+@keyframes orb-float-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%       { transform: translate(20px, 40px) scale(1.08); }
+}
+
+.bg-orb-1 { animation: orb-float-1 14s ease-in-out infinite; }
+.bg-orb-2 { animation: orb-float-2 18s ease-in-out infinite; }
+.bg-orb-3 { animation: orb-float-3 22s ease-in-out infinite; }
 
 * { box-sizing: border-box; }
 
