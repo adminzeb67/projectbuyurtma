@@ -60,7 +60,7 @@ function MenuContent() {
   // Scroll to section when param changes or items load
   useEffect(() => {
     if (!sectionParam || loading) return;
-    const map: Record<string, React.RefObject<HTMLElement>> = {
+    const map: Record<string, React.RefObject<HTMLElement | null>> = {
       fastfood: fastfoodRef,
       foods:    foodsRef,
       drinks:   drinksRef,
@@ -169,7 +169,7 @@ function MenuContent() {
     title: string;
     icon: React.ReactNode;
     items: any[];
-    sectionRef: React.RefObject<HTMLElement>;
+    sectionRef: React.RefObject<HTMLElement | null>;
     accentClass: string;
   }) => {
     const filtered = filter(items);
