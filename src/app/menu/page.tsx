@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect, useRef, Suspense } from "react";
-import { Star, X, ArrowRight, CheckCircle2, ChevronLeft, Navigation, CreditCard, Banknote, Search, RefreshCw, Coffee, Pizza, Sandwich } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Star, X, ArrowRight, CheckCircle2, ChevronLeft, Navigation, CreditCard, Banknote, Search, RefreshCw, Coffee, Pizza, Sandwich, MessageSquare, Plus } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { SuccessAnimation } from "@/components/SuccessAnimation";
 import { Logo } from "@/components/Logo";
@@ -36,9 +37,10 @@ function MenuContent() {
   const [showOrderSuccess, setShowOrderSuccess] = useState(false);
   const [createdOrderId, setCreatedOrderId] = useState<string | null>(null);
   const [orderDrinks, setOrderDrinks]   = useState<any[]>([]);
-  const [paymentMethod, setPaymentMethod] = useState<"CASH"|"CARD"|null>(null);
+  const [paymentMethod, setPaymentMethod] = useState<"CASH"|"CARD"|"CLICK"|"PAYME"|null>(null);
   const [phone, setPhone]         = useState("+998");
   const [locationStr, setLocationStr] = useState("");
+  const [customerNote, setCustomerNote] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -97,6 +99,7 @@ function MenuContent() {
     setPaymentMethod(null);
     setPhone("+998");
     setLocationStr("");
+    setCustomerNote("");
     setStep("DETAILS");
   };
 
@@ -126,7 +129,7 @@ function MenuContent() {
         body: JSON.stringify({
           name: "Mijoz (Saytdan)", phone,
           items, totalAmount: items.reduce((s, i) => s + i.price, 0),
-          paymentMethod, location: locationStr,
+          paymentMethod, location: locationStr, customerNote,
         }),
       });
       if (res.ok) { 
@@ -342,20 +345,24 @@ function MenuContent() {
                 <div className="flex flex-col items-center text-center py-4">
                   <h3 className="text-[22px] font-black text-white mb-6">To'lov turini tanlang</h3>
                   <div className="grid grid-cols-2 gap-4 w-full">
-                    <div onClick={() => { setPaymentMethod("CASH"); setStep("INFO"); }}
-                      className="flex flex-col items-center gap-4 p-6 bg-[#27272a] rounded-[24px] cursor-pointer border border-transparent hover:border-green-500/30 hover:bg-green-500/10 transition-all group">
-                      <div className="w-16 h-16 rounded-full bg-green-500/20 flex items-center justify-center">
-                        <Banknote className="w-8 h-8 text-green-400 group-hover:scale-110 transition-transform" />
-                      </div>
-                      <span className="font-bold text-white">Naqd pul</span>
-                    </div>
-                    <div onClick={() => alert("Karta to'lovi tez orada qo'shiladi!")}
-                      className="flex flex-col items-center gap-4 p-6 bg-[#27272a] rounded-[24px] cursor-pointer border border-transparent hover:border-orange-500/30 hover:bg-orange-500/10 transition-all group">
-                      <div className="w-16 h-16 rounded-full bg-orange-500/20 flex items-center justify-center">
-                        <CreditCard className="w-8 h-8 text-orange-400 group-hover:scale-110 transition-transform" />
-                      </div>
-                      <span className="font-bold text-white">Karta</span>
-                    </div>
+                    {[
+                      { id: "CASH",  label: "Naqd pul",  emoji: "💵", color: "green" },
+                      { id: "CLICK", label: "Click",      emoji: "📱", color: "blue" },
+                      { id: "PAYME", label: "Payme",      emoji: "💳", color: "teal" },
+                      { id: "CARD",  label: "Karta",      emoji: "🏦", color: "orange" },
+                    ].map(pm => (
+                      <motion.div
+                        key={pm.id}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => { setPaymentMethod(pm.id as any); setStep("INFO"); }}
+                        className={`flex flex-col items-center gap-3 p-5 bg-[#27272a] rounded-[24px] cursor-pointer border-2 transition-all ${
+                          paymentMethod === pm.id ? `border-${pm.color}-500 bg-${pm.color}-500/10` : "border-transparent hover:border-white/10"
+                        }`}
+                      >
+                        <span className="text-4xl">{pm.emoji}</span>
+                        <span className="font-bold text-white text-sm">{pm.label}</span>
+                      </motion.div>
+                    ))}
                   </div>
                 </div>
               )}
@@ -376,8 +383,20 @@ function MenuContent() {
                       {locationStr ? "Lokatsiya olindi!" : "📍 GPS orqali yuborish"}
                     </button>
                   </div>
+                  <div>
+                    <label className="block text-[#a1a1aa] text-[13px] font-bold mb-2 ml-1 flex items-center gap-1">
+                      <MessageSquare className="w-4 h-4" /> Kuryerga eslatma (ixtiyoriy)
+                    </label>
+                    <textarea
+                      value={customerNote}
+                      onChange={e => setCustomerNote(e.target.value)}
+                      rows={2}
+                      placeholder="Masalan: eshikni taqillatmang, chaqaloq uxlayapti..."
+                      className="w-full bg-[#27272a] border border-white/10 rounded-[20px] px-5 py-4 text-white text-[14px] focus:outline-none focus:border-orange-500/50 resize-none"
+                    />
+                  </div>
                   <button onClick={submitOrder} disabled={isSubmitting || !locationStr}
-                    className="mt-4 w-full h-[60px] rounded-[20px] font-black text-[17px] text-white bg-green-500 hover:bg-green-600 shadow-[0_0_20px_rgba(34,197,94,0.3)] disabled:opacity-50 transition-all flex justify-center items-center">
+                    className="mt-2 w-full h-[60px] rounded-[20px] font-black text-[17px] text-white bg-green-500 hover:bg-green-600 shadow-[0_0_20px_rgba(34,197,94,0.3)] disabled:opacity-50 transition-all flex justify-center items-center">
                     {isSubmitting ? <div className="w-6 h-6 border-2 border-white/50 border-t-white rounded-full animate-spin" /> : "Buyurtmani tasdiqlash ✓"}
                   </button>
                 </div>

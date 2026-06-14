@@ -34,6 +34,8 @@ model User {
   role      Role     @default(CLIENT)
   latitude  Float?
   longitude Float?
+  cashbackBalance Float @default(0)
+  savedAddresses  String? // JSON array of addresses
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -77,6 +79,7 @@ model MenuItem {
   price        Float
   image        String?
   isAvailable  Boolean      @default(true)
+  modifiers    String?      // JSON array of modifiers
   categoryId   String
   category     MenuCategory @relation(fields: [categoryId], references: [id])
   restaurantId String
@@ -106,6 +109,7 @@ model Order {
 
   paymentMethod   String      @default("Naqd") // Naqd, Click, Payme
   estimatedTime   Int?        // Taxminiy yetkazish vaqti (daqiqalarda)
+  customerNote    String?     // Mijoz qoldirgan izoh
 
   items           OrderItem[]
 }
