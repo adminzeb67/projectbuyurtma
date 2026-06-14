@@ -6,16 +6,16 @@ import { useRouter } from "next/navigation";
 import { Logo } from "@/components/Logo";
 
 const categories = [
-  { icon: Pizza, label: "Ovqatlar", color: "text-orange-500", bg: "bg-orange-500/10" },
-  { icon: Coffee, label: "Ichimliklar", color: "text-blue-400", bg: "bg-blue-400/10" },
-  { icon: Sandwich, label: "Fastfud", color: "text-yellow-400", bg: "bg-yellow-400/10" },
+  { icon: Pizza,    label: "Ovqatlar",    color: "text-orange-500", bg: "bg-orange-500/10", section: "foods" },
+  { icon: Coffee,   label: "Ichimliklar", color: "text-blue-400",   bg: "bg-blue-400/10",   section: "drinks" },
+  { icon: Sandwich, label: "Fastfud",     color: "text-yellow-400",bg: "bg-yellow-400/10", section: "fastfood" },
 ];
 
 const trending = [
-  { id: 1, name: "Mol go'shtli Lavash", price: "28 000", img: "🌯", rating: 4.9 },
-  { id: 2, name: "Tovuqli Burger", price: "24 000", img: "🍔", rating: 4.8 },
-  { id: 3, name: "Pepsi 0.5L", price: "7 000", img: "🥤", rating: 4.7 },
-  { id: 4, name: "Klab Sendvich", price: "32 000", img: "🥪", rating: 4.9 },
+  { id: 1, name: "Mol go'shtli Lavash", price: "28 000", img: "🌯", rating: 4.9, section: "fastfood" },
+  { id: 2, name: "Tovuqli Burger",      price: "24 000", img: "🍔", rating: 4.8, section: "fastfood" },
+  { id: 3, name: "Pepsi 0.5L",          price: "7 000",  img: "🥤", rating: 4.7, section: "drinks" },
+  { id: 4, name: "Klab Sendvich",       price: "32 000", img: "🥪", rating: 4.9, section: "fastfood" },
 ];
 
 export default function HomePage() {
@@ -88,7 +88,7 @@ export default function HomePage() {
             {categories.map((c, i) => (
               <button 
                 key={i} 
-                onClick={() => router.push("/menu")}
+                onClick={() => router.push(`/menu?section=${c.section}`)}
                 className="flex flex-col items-center gap-2 min-w-[80px]"
               >
                 <div className={`w-16 h-16 rounded-[20px] ${c.bg} flex items-center justify-center border border-white/5`}>
@@ -111,8 +111,8 @@ export default function HomePage() {
             {trending.map((item) => (
               <div 
                 key={item.id}
-                onClick={() => router.push("/menu")}
-                className="min-w-[160px] bg-[#18181b] rounded-[24px] p-3 border border-white/5 shadow-lg flex flex-col active:scale-95 transition-transform"
+                onClick={() => router.push(`/menu?section=${item.section}`)}
+                className="min-w-[160px] bg-[#18181b] rounded-[24px] p-3 border border-white/5 shadow-lg flex flex-col active:scale-95 transition-transform cursor-pointer"
               >
                 <div className="w-full h-[120px] bg-[#27272a] rounded-[16px] mb-3 flex items-center justify-center text-[60px]">
                   {item.img}
