@@ -86,8 +86,8 @@ export function AuthView() {
           <div className="flex flex-col items-center justify-center w-full max-w-md animate-fade-in text-center gap-8 py-10">
             {/* Hero Logo */}
             <div className="relative">
-              <div className="absolute inset-0 bg-orange-500/20 blur-[40px] rounded-full animate-pulse" />
-              <Logo className="w-32 h-32 sm:w-40 sm:h-40 relative z-10 shadow-[0_0_40px_rgba(249,115,22,0.3)] rounded-[30%]" />
+              <div className="absolute inset-0 bg-orange-500/20 blur-[50px] rounded-full animate-pulse" />
+              <Logo className="w-48 h-48 sm:w-56 sm:h-56 relative z-10 shadow-[0_0_50px_rgba(249,115,22,0.4)] rounded-[25%]" />
             </div>
 
             {/* Title & Info */}
@@ -147,7 +147,7 @@ export function AuthView() {
 
             {/* Header Title */}
             <div className="flex flex-col items-center justify-center mb-10">
-              <Logo className="w-20 h-20 mb-6 shadow-[0_0_30px_rgba(249,115,22,0.2)] rounded-[25%]" />
+              <Logo className="w-32 h-32 sm:w-40 sm:h-40 mb-6 shadow-[0_0_40px_rgba(249,115,22,0.3)] rounded-[25%]" />
               <h2 className="text-[32px] font-black text-white tracking-tight drop-shadow-md text-center">
                 {isLogin ? "Kirish" : "Xush kelibsiz!"}
               </h2>
