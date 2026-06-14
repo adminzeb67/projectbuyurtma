@@ -98,7 +98,7 @@ export default function ProfilPage() {
         </button>
       </div>
 
-      <div className="px-4 pt-5 flex flex-col gap-5">
+      <div className="px-4 pt-5 flex flex-col gap-5 max-w-[620px] mx-auto w-full">
 
         {/* ─── COMPACT PROFILE STRIP ─── */}
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
