@@ -33,12 +33,8 @@ const banners = [
   { emoji: "🎁", title: "Keshbek 5%", sub: "Har bir buyurtmangizdan 5% keshbek.", tag: "Sovg'a", gradient: "linear-gradient(135deg, #059669 0%, #0d9488 100%)" },
 ];
 
-const trending = [
-  { id: 1, name: "Mol go'shtli Lavash", price: "28 000", img: "🌯", rating: 4.9, section: "fastfood" },
-  { id: 2, name: "Tovuqli Burger",      price: "24 000", img: "🍔", rating: 4.8, section: "fastfood" },
-  { id: 3, name: "Pepsi 0.5L",          price: "7 000",  img: "🥤", rating: 4.7, section: "drinks" },
-  { id: 4, name: "Klab Sendvich",       price: "32 000", img: "🥪", rating: 4.9, section: "fastfood" },
-];
+
+
 
 const storyItems = [
   { emoji: "👨‍🍳", title: "Professional Oshpazlar", desc: "10 yillik tajribaga ega ustalar tomonidan tayyorlanadi." },
@@ -52,6 +48,8 @@ export default function HomePage() {
   const [activeBanner, setActiveBanner] = useState(0);
   const [geofenceWarning, setGeofenceWarning] = useState(false);
   const [siteSettings, setSiteSettings] = useState<Record<string,string>>({});
+  const [trendingItems, setTrendingItems] = useState<any[]>([]);
+  const [trendingLoading, setTrendingLoading] = useState(true);
 
   useEffect(() => {
     setMounted(true);
@@ -62,6 +60,13 @@ export default function HomePage() {
       .then(r => r.json())
       .then(d => setSiteSettings(d || {}))
       .catch(() => {});
+
+    // Load trending items from DB
+    fetch("/api/menu/trending")
+      .then(r => r.json())
+      .then(d => { if (Array.isArray(d)) setTrendingItems(d); })
+      .catch(() => {})
+      .finally(() => setTrendingLoading(false));
 
     // Geofence check
     if (navigator.geolocation) {
@@ -201,7 +206,7 @@ export default function HomePage() {
           </div>
         </motion.div>
 
-        {/* TRENDING */}
+        {/* TRENDING — real items from DB */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -211,31 +216,43 @@ export default function HomePage() {
           <div className="flex items-center gap-2 mb-4">
             <Flame className="w-5 h-5 text-orange-500" />
             <h3 className="text-[18px] font-bold text-white">Trenddagi taomlar</h3>
+            <span className="ml-auto text-[12px] text-[#a1a1aa] font-medium">Ko'p buyurtma berilgan</span>
           </div>
           <div className="flex gap-4 overflow-x-auto scrollbar-hide pb-4 -mx-4 px-4">
-            {trending.map((item, i) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 * i + 0.2 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => router.push(`/menu?section=${item.section}`)}
-                className="min-w-[160px] bg-[#18181b] rounded-[24px] p-3 border border-white/5 shadow-lg flex flex-col cursor-pointer"
-              >
-                <div className="w-full h-[120px] bg-[#27272a] rounded-[16px] mb-3 flex items-center justify-center text-[60px]">
-                  {item.img}
-                </div>
-                <h4 className="text-[15px] font-bold text-white leading-tight mb-1">{item.name}</h4>
-                <div className="flex items-center justify-between mt-auto pt-2">
-                  <span className="text-[14px] font-bold text-orange-500">{item.price} <span className="text-[10px]">so'm</span></span>
-                  <div className="flex items-center gap-1 bg-[#27272a] px-1.5 py-0.5 rounded-md">
-                    <Star className="w-3 h-3 text-yellow-500 fill-yellow-500" />
-                    <span className="text-[11px] font-bold">{item.rating}</span>
+            {trendingLoading ? (
+              [1,2,3,4].map(i => (
+                <div key={i} className="min-w-[160px] h-[210px] bg-[#18181b] rounded-[24px] animate-pulse border border-white/5 shrink-0" />
+              ))
+            ) : trendingItems.length === 0 ? (
+              <p className="text-[#a1a1aa] text-sm py-4">Hali buyurtmalar yo'q</p>
+            ) : (
+              trendingItems.map((item, i) => (
+                <motion.div
+                  key={item.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.07 * i }}
+                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: 1.03 }}
+                  onClick={() => router.push("/menu")}
+                  className="min-w-[160px] bg-[#18181b] rounded-[24px] p-3 border border-white/5 shadow-lg flex flex-col cursor-pointer shrink-0"
+                >
+                  <div className="w-full h-[110px] bg-[#27272a] rounded-[16px] mb-3 flex items-center justify-center text-[55px]">
+                    {item.emoji}
                   </div>
-                </div>
-              </motion.div>
-            ))}
+                  <h4 className="text-[14px] font-bold text-white leading-tight mb-1 line-clamp-2">{item.name}</h4>
+                  <div className="flex items-center justify-between mt-auto pt-2">
+                    <span className="text-[13px] font-bold text-orange-500">{Number(item.price).toLocaleString()} <span className="text-[10px]">so'm</span></span>
+                    {item.orderCount > 0 && (
+                      <div className="flex items-center gap-1 bg-orange-500/10 px-1.5 py-0.5 rounded-md">
+                        <Flame className="w-3 h-3 text-orange-500" />
+                        <span className="text-[10px] font-bold text-orange-400">{item.orderCount}x</span>
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
+              ))
+            )}
           </div>
         </motion.div>
 
