@@ -143,23 +143,35 @@ function MenuContent() {
     finally { setIsSubmitting(false); }
   };
 
-  const ItemCard = ({ item }: { item: any }) => (
-    <div
+  const ItemCard = ({ item, index }: { item: any; index: number }) => (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.05, duration: 0.3, ease: "easeOut" }}
+      whileHover={{ scale: 1.03 }}
+      whileTap={{ scale: 0.95 }}
       onClick={() => openWizard(item)}
-      className="flex flex-col p-3 rounded-[24px] bg-[#18181b] border border-white/5 shadow-lg cursor-pointer hover:bg-[#27272a] transition-all hover:scale-[1.02] active:scale-95"
+      className="flex flex-col p-3 rounded-[24px] bg-[#18181b] border border-white/5 shadow-lg cursor-pointer"
     >
-      <div className="w-full aspect-square rounded-[16px] flex items-center justify-center text-5xl sm:text-6xl bg-[#27272a] shadow-inner mb-3">
+      <motion.div
+        className="w-full aspect-square rounded-[16px] flex items-center justify-center text-5xl sm:text-6xl bg-[#27272a] shadow-inner mb-3"
+        whileHover={{ scale: 1.1, rotate: 5 }}
+        transition={{ type: "spring", stiffness: 300 }}
+      >
         {item.emoji}
-      </div>
+      </motion.div>
       <h3 className="font-bold text-[15px] text-white leading-tight line-clamp-2 mb-1">{item.name}</h3>
       <p className="text-[12px] text-[#a1a1aa] line-clamp-1 mb-2">{item.desc}</p>
       <div className="flex items-center justify-between mt-auto">
         <span className="text-[14px] font-black text-orange-500">{formatPrice(item.price)}</span>
-        <div className="w-8 h-8 rounded-full bg-orange-500/10 flex items-center justify-center border border-orange-500/20 text-orange-500">
+        <motion.div
+          className="w-8 h-8 rounded-full bg-orange-500/10 flex items-center justify-center border border-orange-500/20 text-orange-500"
+          whileHover={{ backgroundColor: "rgba(249,115,22,0.3)" }}
+        >
           <ArrowRight className="w-4 h-4" />
-        </div>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 
   // Section component
@@ -176,17 +188,23 @@ function MenuContent() {
     if (filtered.length === 0 && q !== "") return null;
     if (items.length === 0) return null;
     return (
-      <section ref={sectionRef as any} className="scroll-mt-32">
+      <motion.section
+        ref={sectionRef as any}
+        className="scroll-mt-32"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+      >
         <div className={`flex items-center gap-2 mb-4 ${accentClass}`}>
           {icon}
           <h2 className="text-[22px] font-black">{title}</h2>
-          <span className="ml-auto text-[13px] font-medium text-[#a1a1aa]">{items.length} ta</span>
+          <span className="ml-auto text-[13px] font-medium text-[#a1a1aa]">{filtered.length} ta</span>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
-          {filtered.map(item => <ItemCard key={item.id} item={item} />)}
+          {filtered.map((item, i) => <ItemCard key={item.id} item={item} index={i} />)}
           {filtered.length === 0 && <p className="col-span-full text-[#a1a1aa] text-sm">Topilmadi</p>}
         </div>
-      </section>
+      </motion.section>
     );
   };
 

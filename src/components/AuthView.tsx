@@ -249,6 +249,19 @@ export function AuthView() {
                   isLogin ? "Tizimga kirish" : "Ro'yxatdan o'tish"
                 )}
               </button>
+              
+              {/* Toggle links */}
+              <div className="mt-4 text-center">
+                {isLogin ? (
+                  <button type="button" onClick={() => { setActiveTab('register'); setError(""); }} className="text-[#a1a1aa] hover:text-white transition-colors text-[15px]">
+                    Hisobingiz yo'qmi? <span className="text-orange-500 font-bold ml-1">Ro'yxatdan o'tish</span>
+                  </button>
+                ) : (
+                  <button type="button" onClick={() => { setActiveTab('login'); setError(""); }} className="text-[#a1a1aa] hover:text-white transition-colors text-[15px]">
+                    Allaqachon hisobingiz bormi? <span className="text-orange-500 font-bold ml-1">Tizimga kirish</span>
+                  </button>
+                )}
+              </div>
             </form>
           </div>
         )}
