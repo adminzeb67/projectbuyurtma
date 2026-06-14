@@ -100,28 +100,21 @@ export default function ProfilPage() {
 
       <div className="px-4 pt-5 flex flex-col gap-5">
 
-        {/* ─── HERO PROFILE CARD ─── */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-          className="relative rounded-[28px] p-5 overflow-hidden"
-          style={{ background: "linear-gradient(135deg,rgba(249,115,22,0.14),rgba(234,88,12,0.06))", border: "1px solid rgba(249,115,22,0.18)" }}>
-          <div className="absolute -right-12 -top-12 w-40 h-40 bg-orange-500/10 blur-[60px] rounded-full pointer-events-none" />
-          <div className="flex items-center gap-4">
-            <div className="relative">
-              <div className="w-[66px] h-[66px] rounded-[20px] flex items-center justify-center text-[26px] font-black text-white shrink-0 shadow-[0_0_30px_rgba(249,115,22,0.35)]"
-                style={{ background: "linear-gradient(135deg,#f97316,#ea580c)" }}>
-                {loading ? "..." : initials}
-              </div>
-              <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-[#09090b] shadow" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <h2 className="text-[20px] font-black text-white truncate">{loading ? "Yuklanmoqda..." : displayName}</h2>
-              <span className="text-[13px] font-bold text-orange-400">{user?.phone || "—"}</span>
-            </div>
-            <div className="flex flex-col items-center bg-purple-500/10 border border-purple-500/20 rounded-2xl px-4 py-2.5 shrink-0">
-              <Gift className="w-4 h-4 text-purple-400 mb-1" />
-              <span className="text-[10px] text-[#888] font-bold uppercase tracking-wider">Keshbek</span>
-              <span className="font-black text-purple-300 text-[15px]">{cashbackBalance.toLocaleString()} so'm</span>
-            </div>
+        {/* ─── COMPACT PROFILE STRIP ─── */}
+        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+          className="flex items-center gap-3 px-4 py-3 rounded-[20px] border border-orange-500/15"
+          style={{ background: "linear-gradient(135deg,rgba(249,115,22,0.10),rgba(234,88,12,0.04))" }}>
+          <div className="w-11 h-11 rounded-[12px] flex items-center justify-center text-[16px] font-black text-white shrink-0"
+            style={{ background: "linear-gradient(135deg,#f97316,#ea580c)" }}>
+            {loading ? ".." : initials}
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-[15px] font-black text-white truncate leading-tight">{loading ? "Yuklanmoqda..." : displayName}</p>
+            <p className="text-[12px] font-bold text-orange-400 truncate">{user?.phone || "—"}</p>
+          </div>
+          <div className="flex items-center gap-1.5 bg-purple-500/10 border border-purple-500/20 rounded-xl px-3 py-1.5 shrink-0">
+            <Gift className="w-3.5 h-3.5 text-purple-400" />
+            <span className="font-black text-purple-300 text-[13px]">{cashbackBalance.toLocaleString()} so'm</span>
           </div>
         </motion.div>
 

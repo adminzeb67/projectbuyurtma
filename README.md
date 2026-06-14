@@ -1,84 +1,72 @@
-# OshFast / TaomYet — Ovqat Yetkazib Berish Platformasi (PWA)
+# F.Lavash — Food Delivery PWA
 
-O‘zbekiston bo‘ylab ovqat buyurtma qilish va yetkazib berish xizmati.  
-Progressive Web App (PWA) — brauzer orqali ochiladi va ilova kabi o‘rnatiladi.
+**Stack:** Next.js 16 · Prisma · PostgreSQL (Supabase) · Tailwind CSS · Framer Motion  
+**Deploy:** Railway (auto-deploy GitHub `main` branch)
 
-## 🚀 Loyiha haqida
+---
 
-OshFast — zamonaviy, chiroyli va foydalanuvchiga qulay ovqat yetkazib berish platformasi. Real-time kuzatuv, kuchli animatsiyalar va Qoraqalpog‘iston Respublikasi Xo‘jayli tumani to‘liq qo‘llab-quvvatlanadi.
+## ✅ Bajarilgan ishlar (Oxirgi sessiya)
 
-## 🎥 Qisqa video (Demo)
-Loyiha haqida qisqa video tayyorlanadi (15-30 soniya):  
-- Bosh sahifa va animatsiyalar  
-- Buyurtma berish jarayoni  
-- Real-time kuzatuv  
-- Admin panel ko‘rinishi  
+| # | Bo'lim | Tavsif |
+|---|--------|--------|
+| 1 | **Asosiy sahifa (UI)** | Kategoriyalar grid (3 ustun), keng trending kartochkalar, "Nega aynan biz?" bo'limi yangilandi |
+| 2 | **Sozlamalar sahifasi** | Tab → Accordion dizayni: har bo'lim ochiladi/yopiladi, animatsiya bilan |
+| 3 | **Navigatsiya** | "Profilim" → "Sozlamalar" (⚙️ icon), Sidebar va BottomNav yangilandi |
+| 4 | **Profil maydonlari** | "Ism" + "Login" → bitta "Ism yoki login" maydoniga birlashtirildi |
+| 5 | **Ro'yxatdan o'tish** | Faqat: Ism yoki login · Telefon · Parol · Parolni tasdiqlash |
+| 6 | **Admin cheklovi** | Admin hisobi `ibragimov` bazada emas, shuning uchun tahrirlab bo'lmaydi (to'g'ri xabar chiqadi) |
+| 7 | **Trend taomlar** | Bazadan dinamik yuklanadi (`/api/menu/trending`) |
+| 8 | **Buyurtma tarixi statusi** | Yetkazildi/Kutilmoqda/Tayyorlanmoqda/Bekor — ranglar bilan |
 
-Video YouTube yoki Loom’da joylashtiriladi va README’da link beriladi.
+---
 
-## 🎨 Animatsiyalar va Vizual Effektlar
+## 🔧 Ishlash kerak bo'lgan narsalar (To-Do)
 
-Sayt ilovaga o‘xshab jonli va professional ko‘rinishi uchun quyidagi animatsiyalar qo‘shilgan:
+### 🔴 Yuqori ustuvorlik (Critical)
+- [ ] **Admin paroli o'zgartirish** — Hozir `.env` da qattiq yozilgan (`ADMIN_USER`, `ADMIN_PASS`). Admin o'z parolini o'zgartira olmaydi. Yechim: Admin uchun alohida profil sahifasi yoki `.env` ni yangilash imkoniyati.
+- [ ] **Mijoz profili saqlanmayapti** — `ibragimov` hisobi ADMIN bo'lgani uchun, bu hisob bilan kirganingizda profil tahrir bloklanadi. Oddiy mijoz hisobida tekshirib ko'ring.
+- [ ] **Rasm yuklash (Menu Items)** — Menyu taomlarida emoji o'rniga haqiqiy rasm yuklash imkoniyati yo'q hozircha.
 
-### Umumiy animatsiyalar:
-- Framer Motion kutubxonasi asosida barcha sahifalarda ishlatiladi
-- Smooth scroll, hover effektlari, skeleton loading
+### 🟡 O'rta ustuvorlik
+- [ ] **To'lov integratsiyasi** — Click yoki Payme orqali haqiqiy to'lov. Hozir faqat UI bor, backend yo'q.
+- [ ] **Push Notifications** — Buyurtma holati o'zgarganda mijozga bildirishnoma (Service Worker tayyor, OneSignal/Web Push kerak).
+- [ ] **Admin panel — Mijozlar bo'limi xatolari** — Ba'zi holatda mijozlar ro'yxati yuklanmasligi mumkin (Prisma cache bug).
+- [ ] **Kategoriyalar** — Hozir 3 ta statik (Ovqatlar, Ichimliklar, Fastfud). Admin paneldan dinamik qo'shish imkoniyati yo'q.
 
-### Maxsus animatsiyalar:
-- Ro‘yxatdan o‘tganda — 1.5 sekundlik chiroyli animatsiyali xush kelibsiz xabari (toast + confetti effekti)
-- Buyurtma berganda — 1.5 sekundlik animatsiyali muvaffaqiyat xabari (savatdan taomlar uchib ketishi + order ID paydo bo‘lishi)
-- Hero Banner — Avtomatik slayder, fade + zoom + matn animatsiyasi
-- Kategoriyalar va Kartalar — Scroll paytida stagger animation, hoverda scale + shadow
-- "Savatga qo‘shish" — Taom savatga uchib borish animatsiyasi
-- Buyurtma holati — Har bir bosqichda progress bar va rangli animatsiya
-- Toast xabarlar — Barcha muvaffaqiyat va xato xabarlari 1.5 soniya animatsiya bilan
+### 🟢 Kichik yaxshilanishlar
+- [ ] **Animatsiya — Mahsulot qo'shish** — Menyu sahifasida mahsulot savatga qo'shilganda animatsiya zaif. Kuchaytirish kerak.
+- [ ] **Qidiruv** — Asosiy sahifadagi qidiruv hozir Menyu sahifasiga yo'naltiradi. Haqiqiy qidiruv logikasi kerak.
+- [ ] **Buyurtma holati Uz tilida** — `DELIVERED`, `PENDING` → "Yetkazildi", "Kutilmoqda" — Sozlamalar sahifasida to'g'rilandi, lekin Orders sahifasida hali ham inglizcha.
+- [ ] **SEO / Meta tags** — Har sahifada `<title>` va `<meta description>` to'liq emas.
 
-## ✨ Mijoz tarafi bo‘limlari (Customer Site)
+---
 
-- Bosh sahifa — Hero banner, kategoriyalar, trend taomlar, yaqin restoranlar
-- Qidiruv bo‘limi — Taom, restoran va hudud bo‘yicha kuchli qidiruv
-- Restoranlar ro‘yxati (alohida sahifa) — Filtrlar (reyting, masofa, ochiq/berkitilgan)
-- Restoran sahifasi — Menu, ovqatlar, ichimliklar, oshpaz tavsiyasi, restoran hikoyasi
-- Savat va Buyurtma berish
-- Buyurtma kuzatuvi — Real-time xarita
-- Buyurtmalar tarixi va baholash
-- Profil — Shaxsiy ma’lumotlar, bildirishnomalar tarixi
-- Qo‘shimcha bo‘limlar:
-  - Mening manzillarim (bir nechta manzil saqlash)
-  - Sevimlilar (taom va restoran)
-  - Tez buyurtma (oldingi buyurtmani 1 tugma bilan takrorlash)
-  - Referral dasturi (do‘st taklif qilish va bonus)
-  - Promo kodlar va chegirmalar
-  - Cashback va hisob balansi
-  - Trend taomlar, Eng yaxshi baholanganlar, Tez yetkazib berish (30 daqiqa)
-  - Yangiliklar va aksiyalar markazi
-  - Yordam markazi (FAQ + chat)
-  - Dark Mode
+## 🗄️ Ma'lumotlar bazasi
 
-## 🛠 Admin Paneli bo‘limlari (To‘liq boshqaruv)
+```
+DATABASE_URL  — Supabase Connection Pooler URL (Transaction mode)
+DIRECT_URL    — Supabase Direct URL (Migration uchun)
+ADMIN_USER    — ibragimov (yoki .env da o'zgartirilgan)
+ADMIN_PASS    — .env da saqlangan
+JWT_SECRET    — Session uchun maxfiy kalit
+```
 
-- Dashboard — Real-time statistika va grafiklar
-- Buyurtmalar bo‘limi — Mijoz telefoni, manzili, buyurtma tafsilotlari bilan birga ko‘rish, holatni o‘zgartirish va o‘chirish
-- Ovqatlar va Ichimliklar — Yangi ovqat/ichimlik qo‘shish, tahrirlash, o‘chirish
-- Restoranlar, Kuryerlar, Mijozlar boshqaruvi
-- Karta raqamlari va to‘lov usullari — Qo‘shish, tahrirlash, o‘chirish
-- Analitika — Savdo grafiklar, eng ko‘p sotilgan taomlar, mijozlar o‘sishi
-- Moliya bo‘limi — Daromad, komissiya, hisobotlarni Excel ga chiqarish
-- Marketing — Push notification yuborish, promo kodlar, aksiyalar
-- Shikoyatlar va sharhlar
-- Hududlar boshqaruvi (yangi tuman/viloyat qo‘shish)
-- Foydalanuvchilar faolligi, Tizim sozlamalari, Log va xavfsizlik
-- Reyting va bonus tizimi
+> ⚠️ **Muhim:** `prisma db push` bajargandan keyin Railway'da qayta deploy qiling.  
+> `npx prisma db push` → GitHub push → Railway auto-deploy
 
-## 🗺️ Xarita va Hududlar
-- Qoraqalpog‘iston Respublikasi, Xo‘jayli tumani to‘liq qo‘llab-quvvatlanadi
-- Boshqa hududlar uchun qidiruv
+---
 
-## 🛠 Texnologiya Stack
-- Frontend / PWA: Next.js 14 + Tailwind CSS + Framer Motion
-- Backend: Node.js + NestJS
-- Database: PostgreSQL + Redis
-- Real-time: Socket.io
-- Maps: Google Maps / Yandex Maps
+## 🚀 Local ishga tushirish
 
-## 📥 Loyihani yuklab olish va ishga tushirish
+```bash
+npm install
+npx prisma generate
+npm run dev
+```
+
+**URL:** http://localhost:3000  
+**Railway:** https://projectbuyurtma-buyurtma.up.railway.app
+
+---
+
+*Oxirgi yangilanish: 2026-06-15*
